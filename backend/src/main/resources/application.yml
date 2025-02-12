@@ -1,0 +1,17 @@
+
+spring:
+  application:
+    name: most-wanted-backend
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+
+most-wanted-config:
+    cache-duration: 24
+    max-retries: 3
+    retry-delay: 1000
+    fbi-wanted-base-url: https://api.fbi.gov/wanted/v1
+server:
+  port: 8081
