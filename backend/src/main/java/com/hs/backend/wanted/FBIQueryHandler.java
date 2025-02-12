@@ -13,7 +13,7 @@ import org.springframework.web.client.RestClient;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class FBIQueryHandler {
+class FBIQueryHandler {
     private static final Logger log = LoggerFactory.getLogger(FBIQueryHandler.class);
     private final RestClient restClient;
     private final WantedDataConfig wantedDataConfig;
