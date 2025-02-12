@@ -6,18 +6,16 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MostWantedService {
+class MostWantedService {
     private static final Logger log = LoggerFactory.getLogger(MostWantedService.class);
     private final FBIQueryHandler fbiQueryHandler;
     private final RedisTemplate<String, MostWantedList> mostWantedListRedisTemplate;
-    private final RedisTemplate<String, MostWanted> mostWantedRedisTemplate;
 
     public MostWantedService(FBIQueryHandler fbiQueryHandler, RedisTemplate<String,
             MostWantedList> mostWantedListRedisTemplate, RedisTemplate<String,
             MostWanted> mostWantedRedisTemplate) {
         this.fbiQueryHandler = fbiQueryHandler;
         this.mostWantedListRedisTemplate = mostWantedListRedisTemplate;
-        this.mostWantedRedisTemplate = mostWantedRedisTemplate;
     }
 
     public PagedCollection<MostWanted> getMostWantedList(FilterParam filterParam) {

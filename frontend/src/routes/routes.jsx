@@ -9,7 +9,7 @@ let routes = {
             element: <Login />,
         },
         {
-            path: '/wanted',
+            path: '/',
             element: <MostWanted/>,
             // protected: true
         },

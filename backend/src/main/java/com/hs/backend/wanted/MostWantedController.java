@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/wanted")
-public class MostWantedController {
+class MostWantedController {
 
     private final MostWantedService mostWantedService;
 
