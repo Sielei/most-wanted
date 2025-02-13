@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { setError } from "@/redux/authSlice.js";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import MostWantedFilters from "@/features/wanted/components/MostWantedFilters.jsx";
+import {handleApiError} from "@/features/util/erroHandler.js";
+import NoResult from "@/features/wanted/NoResult.jsx";
 
 const MostWantedList = () => {
     const [mostWantedPersons, setMostWantedPersons] = useState([]);
@@ -13,6 +15,7 @@ const MostWantedList = () => {
     const [activeFilters, setActiveFilters] = useState({});
 
     const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+    const hasActiveFilters = Object.values(activeFilters).some(value => value !== '');
 
     useEffect(() => {
         const fetchMostWantedPersons = async () => {
@@ -42,6 +45,7 @@ const MostWantedList = () => {
             }
             catch (error) {
                 setError(error.message);
+                handleApiError(error)
             }
             finally {
                 setIsLoading(false);
@@ -67,7 +71,16 @@ const MostWantedList = () => {
 
     const handleFilterChange = (filters) => {
         setActiveFilters(filters);
-        setCurrentPage(1); // Reset to first page when filters change
+        setCurrentPage(1);
+    };
+
+    const handleClearFilters = () => {
+        const emptyFilters = Object.keys(activeFilters).reduce((acc, key) => {
+            acc[key] = '';
+            return acc;
+        }, {});
+        setActiveFilters(emptyFilters);
+        setCurrentPage(1);
     };
 
     return (
@@ -77,7 +90,12 @@ const MostWantedList = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
                 {isLoading ? (
                     <div className="col-span-full text-center">Loading...</div>
-                ) : (
+                ) : mostWantedPersons.length === 0 ? (
+                    <NoResult
+                        hasActiveFilters={hasActiveFilters}
+                        onClearFilters={handleClearFilters}
+                    />
+                ): (
                     mostWantedPersons.map((mostWantedPerson) => (
                         <MostWantedCard
                             key={mostWantedPerson.uid}
