@@ -3,6 +3,8 @@ import {Route, Routes} from "react-router-dom";
 import ProtectedRoute from "@/routes/ProtectedRoute.jsx";
 import routes from "@/routes/routes.jsx";
 import useAuthRoute from "@/hooks/useAuthRoute.js";
+import {ToastContainer} from "react-toastify";
+
 
 function App() {
     const isAuthPage = useAuthRoute();
@@ -27,6 +29,7 @@ function App() {
                   </main>
               </div>
           </Suspense>
+          <ToastContainer/>
       </div>
     </>
   )
