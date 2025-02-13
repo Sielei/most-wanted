@@ -1,4 +1,4 @@
-package com.hs.backend.config;
+package com.hs.backend.common;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

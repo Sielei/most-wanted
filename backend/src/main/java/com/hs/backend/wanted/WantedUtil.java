@@ -6,9 +6,9 @@ public class WantedUtil {
     public static PagedCollection<MostWanted> mapWantedListToPagedCollection(MostWantedList mostWantedList, Integer page, Integer pageSize) {
         var totalElements = mostWantedList.total();
         var totalPages = (int) Math.ceil((double) totalElements / pageSize);
-        if (page < 1 || page > totalPages) {
-            throw new IllegalArgumentException("Page number out of bounds.");
-        }
+//        if (page < 1 || page > totalPages) {
+//            throw new IllegalArgumentException("Page number out of bounds.");
+//        }
         var startIndex = 0;
         var endIndex = Math.min(pageSize, totalElements);
         var data = mostWantedList.items().subList(startIndex, endIndex);

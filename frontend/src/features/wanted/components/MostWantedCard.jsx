@@ -17,8 +17,10 @@ const MostWantedCard = ({wantedPerson}) => {
     function extractRewardFromRewardText(text){
         const regex = /\$[\d,]+/;
         const reward = text.match(regex);
-        console.log(reward[0]);
-        return reward[0];
+        if (reward) {
+            return reward[0];
+        }
+        return "Not Specified";
     }
 
     function handleClick(){
