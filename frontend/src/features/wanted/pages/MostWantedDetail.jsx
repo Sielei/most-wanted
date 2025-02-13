@@ -1,4 +1,5 @@
 import {useLocation, useParams} from 'react-router-dom';
+import {FileText} from "lucide-react";
 
 const WantedPersonDetail = () => {
     const { id } = useParams();
@@ -47,6 +48,27 @@ const WantedPersonDetail = () => {
                     </div>
                 ))}
             </div>
+            {wantedPerson.files && wantedPerson.files.length > 0 && (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-semibold">Download Posters</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {wantedPerson.files.map((file, index) => (
+                            <a
+                                key={index}
+                                href={file.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                            >
+                                <FileText className="w-6 h-6 text-gray-600 mr-3" />
+                                <span className="text-gray-800 font-medium">
+                                    {file.name || `Document ${index + 1}`}
+                                </span>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             {/* Details Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -155,7 +177,7 @@ const WantedPersonDetail = () => {
                 </div>
             </div>
 
-            {/* Additional Information */}
+            {/* Reward Information */}
             <div className="space-y-6">
                 {wantedPerson.reward_text && (
                     <div className="bg-green-50 border-l-4 border-green-500 p-4">
