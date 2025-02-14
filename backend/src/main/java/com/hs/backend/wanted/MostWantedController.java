@@ -4,10 +4,17 @@ import io.github.resilience4j.ratelimiter.RateLimiter;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/wanted")
+@Tag(name = "FBI Most Wanted", description = "API endpoints for FBI Most Wanted information")
 class MostWantedController {
 
     private final Timer mostWantedListRequestTimer;
@@ -24,6 +31,13 @@ class MostWantedController {
     }
 
     @GetMapping
+    @Operation(
+            summary = "Get wanted list",
+            description = "Retrieve a paginated list of wanted persons with optional filters"
+    )
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved wanted list")
+    @ApiResponse(responseCode = "429", description = "Too many requests")
+    @ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))})
     @Timed(value = "fbi.wanted.list.time", description = "Time taken to fetch most wanted list")
     PagedCollection<MostWanted> mostWantedSummary(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
